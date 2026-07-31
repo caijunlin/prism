@@ -1,0 +1,8 @@
+jdk:
+  - openjdk21
+
+before_install:
+  - ./gradlew wrapper --gradle-version 8.14.5
+
+install:
+  - ./gradlew :library:clean :library:publishToMavenLocal --no-configuration-cache --refresh-dependencies
