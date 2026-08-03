@@ -2,6 +2,7 @@ package com.github.caijunlin.prism
 
 import android.content.Context
 import android.util.Log
+import androidx.annotation.Keep
 import com.github.caijunlin.prism.callback.Callback
 import com.github.caijunlin.prism.core.KernelManager
 import com.github.caijunlin.prism.renderer.VLCRenderPool
@@ -13,6 +14,7 @@ import com.github.caijunlin.prism.widget.WidgetManager
  * @date   : 2026/03/18 15:32
  * @description : 对外暴露的函数
  */
+@Keep
 object X5Kit {
 
     /**
@@ -20,6 +22,7 @@ object X5Kit {
      * @param context 上下文
      * @param authCode 鉴权码
      */
+    @Keep
     @JvmStatic
     fun init(
         context: Context,
@@ -43,6 +46,7 @@ object X5Kit {
      * 注册内核监听回调
      * @param callback 回调接口
      */
+    @Keep
     @JvmStatic
     fun registerCallback(callback: Callback) {
         try {
@@ -58,6 +62,7 @@ object X5Kit {
      * 在组件（如 Activity/Fragment）销毁时调用，防止回调持有 Context 导致内存泄漏
      * @param callback 回调接口
      */
+    @Keep
     @JvmStatic
     fun unregisterCallback(callback: Callback) {
         try {
@@ -74,6 +79,7 @@ object X5Kit {
      * @param authCode 鉴权码
      * @return 授权状态
      */
+    @Keep
     @JvmStatic
     fun isAuthorized(
         context: Context,
@@ -85,6 +91,7 @@ object X5Kit {
     /**
      * 软释放：关闭当前工程（或退出当前浏览器页面）时调用。
      */
+    @Keep
     @JvmStatic
     fun releaseRender() {
         try {
@@ -100,6 +107,7 @@ object X5Kit {
      * 终极核平指令：彻底退出 App 时调用。
      * @param context 上下文
      */
+    @Keep
     @JvmStatic
     fun releaseAll(context: Context) {
         try {
