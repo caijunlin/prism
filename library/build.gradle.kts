@@ -35,6 +35,8 @@ android {
     sourceSets {
         val eglKotlinPath = "src/core/egl/kotlin"
         getByName("x5") {
+            assets.srcDir("src/facets/x5/assets")
+            jniLibs.srcDir("src/facets/x5/jniLibs")
             kotlin.srcDirs("src/facets/x5/kotlin", eglKotlinPath)
         }
         getByName("native") {
@@ -85,11 +87,11 @@ android {
 }
 
 dependencies {
-    api(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    "x5Implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    listOf("x5Implementation", "nativeImplementation").forEach { add(it, libs.libvlc) }
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    api(libs.libvlc)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
@@ -115,6 +117,7 @@ publishing {
 tasks.register("createRelease") {
     description = ""
     group = "publishing"
+    notCompatibleWithConfigurationCache("")
     doLast {
         val checkProcess = ProcessBuilder("gh", "release", "view", versionName)
             .redirectOutput(ProcessBuilder.Redirect.DISCARD)
