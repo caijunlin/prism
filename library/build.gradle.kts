@@ -1,7 +1,7 @@
 val versionName = "1.0.0"
 
 val jdkVersion = 21
-val flavors = listOf("x5", "native", "lite")
+val flavors = listOf("x5", "native", "normal")
 
 plugins {
     alias(libs.plugins.android.library)
@@ -30,7 +30,10 @@ android {
     productFlavors {
         create("x5") { dimension = "prism" }
         create("native") { dimension = "prism" }
-        create("lite") { dimension = "prism" }
+        create("normal") {
+            isDefault = true
+            dimension = "prism"
+        }
     }
     sourceSets {
         val eglKotlinPath = "src/core/egl/kotlin"
@@ -42,8 +45,8 @@ android {
         getByName("native") {
             kotlin.srcDirs("src/facets/native/kotlin", eglKotlinPath)
         }
-        getByName("lite") {
-            kotlin.srcDir("src/facets/lite/kotlin")
+        getByName("normal") {
+            kotlin.srcDir("src/facets/normal/kotlin")
         }
     }
 
