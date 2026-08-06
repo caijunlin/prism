@@ -17,7 +17,7 @@ android {
     namespace = "com.github.caijunlin.prism"
     version = versionName
     compileSdk {
-        version = release(libs.versions.lcSdk.get().toInt())
+        version = release(libs.versions.compileSdk.get().toInt())
     }
 
     defaultConfig {
