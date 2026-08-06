@@ -25,5 +25,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "prism"
-include(":app")
 include(":library")
