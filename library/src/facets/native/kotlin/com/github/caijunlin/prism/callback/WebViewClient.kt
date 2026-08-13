@@ -21,7 +21,7 @@ open class WebViewClient : OWebViewClient() {
      * @param view 当前的 StreamWebView 实例
      * @param errorMsg 错误描述信息
      */
-    open fun onLoadFailed(view: OWebView, errorMsg: String) {
+    open fun onLoadFailed(view: WebView, errorMsg: String) {
     }
 
     /**
@@ -30,7 +30,7 @@ open class WebViewClient : OWebViewClient() {
      * @param url 加载的地址
      * @param favicon 页面图标
      */
-    open fun onPageStart(view: OWebView, url: String, favicon: Bitmap?) {
+    open fun onPageStart(view: WebView, url: String, favicon: Bitmap?) {
     }
 
     /**
@@ -38,7 +38,7 @@ open class WebViewClient : OWebViewClient() {
      * @param view 当前的 StreamWebView 实例
      * @param url 加载的地址
      */
-    open fun onPageFinish(view: OWebView, url: String) {
+    open fun onPageFinish(view: WebView, url: String) {
     }
 
     /**
