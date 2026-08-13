@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * @author : caijunlin
  * @date   : 2026/03/31
- * @description : X5内核生命周期管理类 (三段式流水线架构)
+ * @description : X5内核生命周期管理类
  */
 object KernelManager {
 
@@ -72,7 +72,7 @@ object KernelManager {
     }
 
     /**
-     * 流水线总调度：初始化内核入口
+     * 初始化内核入口
      */
     @Synchronized
     fun initKernel(context: Context, authCode: String) {
@@ -83,7 +83,7 @@ object KernelManager {
             isSuccess = false
         }
 
-        // 第一阶段：全局环境与参数配置
+        // 全局环境与参数配置
         prepareEnvironment(context, authCode)
 
         // 检查授权状态进行分流
@@ -92,7 +92,7 @@ object KernelManager {
             // 已有授权：跳过安装，直接进入第三阶段
             doAuthAndInit(context)
         } else {
-            // 无授权/首次：进入第二阶段 (安装 -> 鉴权)
+            // 无授权/首次：进入第二阶段安装 -> 鉴权
             installAndAuth(context, authCode)
         }
     }
@@ -116,7 +116,7 @@ object KernelManager {
     private fun installAndAuth(context: Context, authCode: String) {
         val kernelVersion = 48445
         val version = QbSdk.getTbsVersion(context)
-        Log.d("VLCDecoder", "cv=$version iv=$kernelVersion")
+        Log.d("Prism", "cv=$version iv=$kernelVersion")
         /** 判断是否需要安装或更新内核 */
         val needInstallOrUpdateX5 = version != kernelVersion
 
@@ -124,12 +124,12 @@ object KernelManager {
             // 创建下载器实例
             val downloader = object : X5Downloader(context) {
                 override fun onFinished() {
-                    Log.d("VLCDecoder", "Inst done, prep auth")
+                    Log.d("Prism", "Inst done, prep auth")
                     doAuthAndInit(context)
                 }
 
                 override fun onFailed(code: Int, msg: String?) {
-                    Log.e("VLCDecoder", "Inst fail: $msg $code")
+                    Log.e("Prism", "Inst fail: $msg $code")
                     dispatchFailed(context, code, msg)
                 }
             }
@@ -144,9 +144,9 @@ object KernelManager {
                         input.copyTo(output)
                     }
                 }
-                Log.d("VLCDecoder", "Copy done")
+                Log.d("Prism", "Copy done")
             } else {
-                Log.d("VLCDecoder", "Cache exist, skip copy")
+                Log.d("Prism", "Cache exist, skip copy")
             }
             downloader.installX5(outFile)
         } else {
@@ -164,18 +164,18 @@ object KernelManager {
             override fun onResponse(license: String?) {
                 QbSdk.preInit(context, object : QbSdk.PreInitCallback {
                     override fun onCoreInitFinished() {
-                        Log.d("VLCDecoder", "Core init done")
+                        Log.d("Prism", "Core init done")
                     }
 
                     override fun onViewInitFinished(isX5Core: Boolean) {
-                        Log.d("VLCDecoder", "View init done, x5: $isX5Core")
+                        Log.d("Prism", "View init done, x5: $isX5Core")
                         dispatchSuccess(context, isX5Core)
                     }
                 })
             }
 
             override fun onFailed(code: Int, msg: String?) {
-                Log.e("VLCDecoder", "Auth fail: $msg $code")
+                Log.e("Prism", "Auth fail: $msg $code")
                 dispatchFailed(context, code, msg)
             }
         })

@@ -33,7 +33,7 @@ object LicenseManager {
         if (oldAuthCodeHash.isNotEmpty() && authCodeHash != oldAuthCodeHash) {
             // 激活码发生了改变，物理删除 X5 的核心文件夹 (app_tbs)
             val dir = File(context.applicationInfo.dataDir, "app_tbs")
-            Log.d("VLCDecoder", "License changed delete X5 core folder: $dir")
+            Log.d("Prism", "License changed delete X5 core folder: $dir")
             dir.deleteRecursively()
         }
         sp.edit { putString(AUTH, authCodeHash) }

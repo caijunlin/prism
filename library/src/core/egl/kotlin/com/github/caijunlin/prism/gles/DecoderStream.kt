@@ -86,7 +86,7 @@ class DecoderStream(
                 if (!hasFirstFrame) {
                     if (System.currentTimeMillis() - startPlayTimeMs > 15000L) {
                         Log.e(
-                            "VLCDecoder",
+                            "Prism",
                             "Watchdog Bite! 15s timeout waiting for FIRST frame: $url"
                         )
                         retryPlay()
@@ -94,7 +94,7 @@ class DecoderStream(
                     }
                 } else {
                     if (System.currentTimeMillis() - lastWatchdogMark > 5000L) {
-                        Log.e("VLCDecoder", "Watchdog Bite! Video completely frozen for 5s: $url")
+                        Log.e("Prism", "Watchdog Bite! Video completely frozen for 5s: $url")
                         retryPlay()
                         return
                     }
@@ -138,7 +138,7 @@ class DecoderStream(
             onFrameUpdateListener?.invoke()
 
         } catch (e: Exception) {
-            Log.e("VLCDecoder", "OES Fast Consume failed: ${e.message}")
+            Log.e("Prism", "OES Fast Consume failed: ${e.message}")
         }
     }
 
@@ -348,7 +348,7 @@ class DecoderStream(
             mediaPlayer?.vlcVout?.detachViews()
             mediaPlayer?.release()
         } catch (e: Exception) {
-            Log.e("VLCDecoder", "Release VLC failed: ${e.message}")
+            Log.e("Prism", "Release VLC failed: ${e.message}")
         } finally {
             mediaPlayer = null
         }
@@ -371,6 +371,6 @@ class DecoderStream(
         miniBitmap = null
         onFrameUpdateListener = null
 
-        Log.d("VLCDecoder", "Release stream: $url")
+        Log.d("Prism", "Release stream: $url")
     }
 }

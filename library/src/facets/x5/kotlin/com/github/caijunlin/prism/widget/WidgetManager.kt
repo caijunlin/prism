@@ -25,7 +25,7 @@ object WidgetManager {
         // 确保 ID 唯一性
         widgetCache.removeAll { it.isSameId(id) }
         widgetCache.add(widget)
-        Log.d("VLCDecoder", "Cached widget with id: $id")
+        Log.d("Prism", "Cached widget with id: $id")
     }
 
     /**
@@ -45,7 +45,7 @@ object WidgetManager {
         val removed = widgetCache.removeAll { it.isSameId(id) }
         if (removed) {
             Log.d(
-                "VLCDecoder", "Removed widget with id: $id"
+                "Prism", "Removed widget with id: $id"
             )
         }
     }
@@ -55,7 +55,7 @@ object WidgetManager {
      */
     fun clearAll() {
         widgetCache.clear()
-        Log.d("VLCDecoder", "Cleared all widget caches.")
+        Log.d("Prism", "Cleared all widget caches.")
     }
 
     /**
@@ -110,11 +110,11 @@ object WidgetManager {
             })($x, $y, $androidW, $androidH);
         """.trimIndent()
         Log.d(
-            "VLCDecoder",
+            "Prism",
             "JS Code WidgetAt: x=$x y=$y androidW=$androidW androidH=$androidH tagName=$tagName"
         )
         webView.evaluateJavascript(jsCode) { result ->
-            Log.d("VLCDecoder", "JS Result: $result")
+            Log.d("Prism", "JS Result: $result")
             if (!result.isNullOrEmpty() && result != "null") {
                 val id = result.replace("\"", "")
                 val targetWidget = widgetCache.find { it.isSameId(id) }
@@ -154,11 +154,11 @@ object WidgetManager {
             })();
         """.trimIndent()
         Log.d(
-            "VLCDecoder",
+            "Prism",
             "JS Code DispatchCustomEvent: elementId=$elementId eventName=$eventName detailData=$detailData"
         )
         webView.evaluateJavascript(jsCode) { result ->
-            Log.d("VLCDecoder", "JS Result: $result")
+            Log.d("Prism", "JS Result: $result")
             val isSuccess = result?.replace("\"", "")?.replace("'", "") == "true"
             onComplete?.invoke(isSuccess)
         }
@@ -171,7 +171,7 @@ object WidgetManager {
      */
     fun triggerRemoveVideoSource(webView: WebView, elementId: String) {
         dispatchCustomEvent(webView, elementId, "remove-video-source") { _ ->
-            Log.d("VLCDecoder", "Triggered remove-video-source successfully on $elementId")
+            Log.d("Prism", "Triggered remove-video-source successfully on $elementId")
         }
     }
 
@@ -185,7 +185,7 @@ object WidgetManager {
         val safeVideoData = JSONObject.quote(videoData)
         val detailObj = "{ videoData: $safeVideoData }"
         dispatchCustomEvent(webView, elementId, "set-video-source", detailObj)
-        Log.d("VLCDecoder", "Triggered set-video-source on $elementId with data")
+        Log.d("Prism", "Triggered set-video-source on $elementId with data")
     }
 
     /**

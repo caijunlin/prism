@@ -233,7 +233,7 @@ class RenderNode(
                             hasActiveDraws = true
                         }
                     } catch (e: Exception) {
-                        Log.e("VLCDecoder", "Throttled Swap failed: ${e.message}")
+                        Log.e("Prism", "Throttled Swap failed: ${e.message}")
                     }
                 }
             }
@@ -277,15 +277,15 @@ class RenderNode(
 
     fun printNodeDiagnostics(nodeIndex: Int) {
         if (!::decoderManager.isInitialized || decoderManager.streams.isEmpty()) return
-        Log.d("VLCDecoder", "------ Node-$nodeIndex ($nodeName) ------")
+        Log.d("Prism", "------ Node-$nodeIndex ($nodeName) ------")
         decoderManager.streams.forEach { (url, stream) ->
-            Log.d("VLCDecoder", "Stream URL: $url")
-            Log.d("VLCDecoder", "|- Decoding: ${stream.isDecoding}")
-            Log.d("VLCDecoder", "|- Active Surfaces: ${stream.displayWindows.size}")
+            Log.d("Prism", "Stream URL: $url")
+            Log.d("Prism", "|- Decoding: ${stream.isDecoding}")
+            Log.d("Prism", "|- Active Surfaces: ${stream.displayWindows.size}")
             stream.displayWindows.forEachIndexed { _, window ->
                 val surfaceHex = Integer.toHexString(window.x5Surface.hashCode())
                 Log.d(
-                    "VLCDecoder",
+                    "Prism",
                     "   |- @$surfaceHex Size: ${window.physicalW}x${window.physicalH} Active:${window.isActive}"
                 )
             }

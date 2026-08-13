@@ -20,7 +20,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun printVLC() {
-        Log.d("VLCDecoder", "printVLC")
+        Log.d("Prism", "printVLC")
         VLCRenderPool.printVLC()
     }
 

@@ -25,7 +25,7 @@ object WidgetManager {
         // 确保 ID 唯一性
         widgetCache.removeAll { it.isSameId(id) }
         widgetCache.add(widget)
-        Log.d("VLCDecoder", "Cached widget with id: $id")
+        Log.d("Prism", "Cached widget with id: $id")
     }
 
     /**
@@ -45,7 +45,7 @@ object WidgetManager {
         val removed = widgetCache.removeAll { it.isSameId(id) }
         if (removed) {
             Log.d(
-                "VLCDecoder", "Removed widget with id: $id"
+                "Prism", "Removed widget with id: $id"
             )
         }
     }
@@ -55,7 +55,7 @@ object WidgetManager {
      */
     fun clearAll() {
         widgetCache.clear()
-        Log.d("VLCDecoder", "Cleared all widget caches.")
+        Log.d("Prism", "Cleared all widget caches.")
     }
 
     /**

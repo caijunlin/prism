@@ -259,7 +259,7 @@ class WebView(
         val tags = arrayOf(widgetTag)
         val success = x5WebViewExtension?.registerEmbeddedWidget(tags, this) ?: false
         Log.d(
-            "VLCDecoder",
+            "Prism",
             "TBS:${QbSdk.getTbsVersion(context)} X5:${isX5Core} Init:${QbSdk.isTbsCoreInited()} FrcSys:${QbSdk.getIsSysWebViewForcedByOuter()} Reg:$success Tag:$widgetTag"
         )
     }

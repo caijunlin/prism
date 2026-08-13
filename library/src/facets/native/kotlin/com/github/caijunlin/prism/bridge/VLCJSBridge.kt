@@ -24,7 +24,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun printVLC() {
-        Log.d("VLCDecoder", "printVLC")
+        Log.d("Prism", "printVLC")
         VLCRenderPool.printVLC()
     }
 
@@ -35,7 +35,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun onVisibilityChanged(id: String, v: Boolean) {
-        Log.d("VLCDecoder", "onVisibilityChanged id=$id visible=$v")
+        Log.d("Prism", "onVisibilityChanged id=$id visible=$v")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.onVisibilityChanged(id, v)
@@ -44,7 +44,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSurfaceCreated(id: String, v: Boolean) {
-        Log.d("VLCDecoder", "onSurfaceCreated id=$id visible=$v")
+        Log.d("Prism", "onSurfaceCreated id=$id visible=$v")
         if (id.isBlank()) return
         webView.post {
             val surface = VELCSurface(
@@ -58,7 +58,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSurfaceDestroyed(id: String) {
-        Log.d("VLCDecoder", "onSurfaceDestroyed id=$id")
+        Log.d("Prism", "onSurfaceDestroyed id=$id")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->
@@ -69,7 +69,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSetAttribute(id: String, k: String, v: String) {
-        Log.d("VLCDecoder", "onSetAttribute id=$id key=$k value=$v")
+        Log.d("Prism", "onSetAttribute id=$id key=$k value=$v")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->
@@ -80,7 +80,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onRectChanged(id: String, x: Float, y: Float, w: Float, h: Float) {
-        Log.d("VLCDecoder", "onRectChanged id=$id x=$x y=$y w=$w h=$h")
+        Log.d("Prism", "onRectChanged id=$id x=$x y=$y w=$w h=$h")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->

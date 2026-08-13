@@ -210,11 +210,11 @@ class VELCSurface(
 
         if (decodingUrl != effectiveUrl) {
             decodingUrl?.let { oldUrl ->
-                Log.d("VLCDecoder", "Stop Decode Stream: $oldUrl $id")
+                Log.d("Prism", "Stop Decode Stream: $oldUrl $id")
                 VLCRenderPool.stopDecodeTask(oldUrl, this)
             }
             effectiveUrl?.let { newUrl ->
-                Log.d("VLCDecoder", "Start Decode Stream: $newUrl $id")
+                Log.d("Prism", "Start Decode Stream: $newUrl $id")
                 VLCRenderPool.startDecodeTask(newUrl, this)
             }
             decodingUrl = effectiveUrl
@@ -228,13 +228,13 @@ class VELCSurface(
                 attachedUrl?.let { oldAttachedUrl ->
                     VLCRenderPool.detachSurface(oldAttachedUrl, this, isClearUrl = false)
                 }
-                Log.d("VLCDecoder", "Attach Surface to Stream: $effectiveUrl  $id")
+                Log.d("Prism", "Attach Surface to Stream: $effectiveUrl  $id")
                 VLCRenderPool.attachSurface(effectiveUrl, this)
                 attachedUrl = effectiveUrl
             }
         } else {
             if (attachedUrl != null) {
-                Log.d("VLCDecoder", "Detach Surface from Stream: $attachedUrl  $id")
+                Log.d("Prism", "Detach Surface from Stream: $attachedUrl  $id")
                 val isClear = effectiveUrl == null
                 VLCRenderPool.detachSurface(attachedUrl!!, this, isClearUrl = isClear)
                 attachedUrl = null
