@@ -1,6 +1,7 @@
 package com.github.caijunlin.prism
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.util.Log
 import androidx.annotation.Keep
 import com.github.caijunlin.prism.callback.Callback
@@ -20,15 +21,18 @@ object X5Kit {
     /**
      * 初始化引擎
      * @param context 上下文
-     * @param authCode 鉴权码
      */
     @Keep
     @JvmStatic
     fun init(
-        context: Context,
-        authCode: String
+        context: Context
     ) {
         try {
+            val authCode = getAuthCode(context)
+            if (authCode.isEmpty()) {
+                Log.e("VLCDecoder", "AuthCode empty")
+                return
+            }
             // 授权开启内核
             KernelManager.initKernel(context, authCode)
             Log.d(
@@ -40,6 +44,23 @@ object X5Kit {
         } catch (e: Exception) {
             Log.e("VLCDecoder", "Init Failed: ${e.message}")
         }
+    }
+
+    fun getAuthCode(context: Context): String {
+        try {
+            val appInfo = context.packageManager.getApplicationInfo(
+                context.packageName,
+                PackageManager.GET_META_DATA
+            )
+            return appInfo.metaData?.getString("com.github.caijunlin.x5.license", "") ?: ""
+        } catch (e: Exception) {
+            Log.e(
+                "VLCDecoder",
+                "Failed to get meta-data: com.github.caijunlin.x5.license",
+                e
+            )
+        }
+        return ""
     }
 
     /**
@@ -76,15 +97,18 @@ object X5Kit {
     /**
      * 获取当前鉴权码的授权状态
      * @param context 上下文
-     * @param authCode 鉴权码
      * @return 授权状态
      */
     @Keep
     @JvmStatic
     fun isAuthorized(
-        context: Context,
-        authCode: String
+        context: Context
     ): Boolean {
+        val authCode = getAuthCode(context)
+        if (authCode.isEmpty()) {
+            Log.e("VLCDecoder", "AuthCode empty")
+            return false
+        }
         return LicenseManager.isAuthorized(context, authCode)
     }
 
