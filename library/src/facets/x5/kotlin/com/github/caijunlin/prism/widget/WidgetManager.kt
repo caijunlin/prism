@@ -1,6 +1,7 @@
 package com.github.caijunlin.prism.widget
 
 import android.util.Log
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.renderer.IVideoRenderClient
 import org.json.JSONObject
@@ -25,7 +26,7 @@ object WidgetManager {
         // 确保 ID 唯一性
         widgetCache.removeAll { it.isSameId(id) }
         widgetCache.add(widget)
-        Log.d("Prism", "Cached widget with id: $id")
+        Log.d(Constant.TAG, "Cached widget with id: $id")
     }
 
     /**
@@ -45,7 +46,7 @@ object WidgetManager {
         val removed = widgetCache.removeAll { it.isSameId(id) }
         if (removed) {
             Log.d(
-                "Prism", "Removed widget with id: $id"
+                Constant.TAG, "Removed widget with id: $id"
             )
         }
     }
@@ -55,7 +56,7 @@ object WidgetManager {
      */
     fun clearAll() {
         widgetCache.clear()
-        Log.d("Prism", "Cleared all widget caches.")
+        Log.d(Constant.TAG, "Cleared all widget caches.")
     }
 
     /**
@@ -110,11 +111,11 @@ object WidgetManager {
             })($x, $y, $androidW, $androidH);
         """.trimIndent()
         Log.d(
-            "Prism",
+            Constant.TAG,
             "JS Code WidgetAt: x=$x y=$y androidW=$androidW androidH=$androidH tagName=$tagName"
         )
         webView.evaluateJavascript(jsCode) { result ->
-            Log.d("Prism", "JS Result: $result")
+            Log.d(Constant.TAG, "JS Result: $result")
             if (!result.isNullOrEmpty() && result != "null") {
                 val id = result.replace("\"", "")
                 val targetWidget = widgetCache.find { it.isSameId(id) }
@@ -154,11 +155,11 @@ object WidgetManager {
             })();
         """.trimIndent()
         Log.d(
-            "Prism",
+            Constant.TAG,
             "JS Code DispatchCustomEvent: elementId=$elementId eventName=$eventName detailData=$detailData"
         )
         webView.evaluateJavascript(jsCode) { result ->
-            Log.d("Prism", "JS Result: $result")
+            Log.d(Constant.TAG, "JS Result: $result")
             val isSuccess = result?.replace("\"", "")?.replace("'", "") == "true"
             onComplete?.invoke(isSuccess)
         }
@@ -171,7 +172,7 @@ object WidgetManager {
      */
     fun triggerRemoveVideoSource(webView: WebView, elementId: String) {
         dispatchCustomEvent(webView, elementId, "remove-video-source") { _ ->
-            Log.d("Prism", "Triggered remove-video-source successfully on $elementId")
+            Log.d(Constant.TAG, "Triggered remove-video-source successfully on $elementId")
         }
     }
 
@@ -185,7 +186,7 @@ object WidgetManager {
         val safeVideoData = JSONObject.quote(videoData)
         val detailObj = "{ videoData: $safeVideoData }"
         dispatchCustomEvent(webView, elementId, "set-video-source", detailObj)
-        Log.d("Prism", "Triggered set-video-source on $elementId with data")
+        Log.d(Constant.TAG, "Triggered set-video-source on $elementId with data")
     }
 
     /**

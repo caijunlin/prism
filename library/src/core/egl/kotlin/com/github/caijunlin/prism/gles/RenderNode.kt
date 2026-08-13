@@ -6,6 +6,7 @@ import android.os.Process
 import android.util.Log
 import android.view.Choreographer
 import android.view.Surface
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.core.VLCDecoderManager
 import com.github.caijunlin.prism.core.VLCEngineManager
 import com.github.caijunlin.prism.renderer.IVideoRenderClient
@@ -209,7 +210,7 @@ class RenderNode(
             val needsRender = stream.hasNewFboData
             stream.hasNewFboData = false
 
-            for (j in 0 until stream.displayWindows.size) {
+            for (j in stream.displayWindows.indices) {
                 val window = stream.displayWindows[j]
                 if (!window.x5Surface.isValid || !window.isActive) continue
 
@@ -233,7 +234,7 @@ class RenderNode(
                             hasActiveDraws = true
                         }
                     } catch (e: Exception) {
-                        Log.e("Prism", "Throttled Swap failed: ${e.message}")
+                        Log.e(Constant.TAG, "Throttled Swap failed: ${e.message}")
                     }
                 }
             }
@@ -277,15 +278,15 @@ class RenderNode(
 
     fun printNodeDiagnostics(nodeIndex: Int) {
         if (!::decoderManager.isInitialized || decoderManager.streams.isEmpty()) return
-        Log.d("Prism", "------ Node-$nodeIndex ($nodeName) ------")
+        Log.d(Constant.TAG, "------ Node-$nodeIndex ($nodeName) ------")
         decoderManager.streams.forEach { (url, stream) ->
-            Log.d("Prism", "Stream URL: $url")
-            Log.d("Prism", "|- Decoding: ${stream.isDecoding}")
-            Log.d("Prism", "|- Active Surfaces: ${stream.displayWindows.size}")
+            Log.d(Constant.TAG, "Stream URL: $url")
+            Log.d(Constant.TAG, "|- Decoding: ${stream.isDecoding}")
+            Log.d(Constant.TAG, "|- Active Surfaces: ${stream.displayWindows.size}")
             stream.displayWindows.forEachIndexed { _, window ->
                 val surfaceHex = Integer.toHexString(window.x5Surface.hashCode())
                 Log.d(
-                    "Prism",
+                    Constant.TAG,
                     "   |- @$surfaceHex Size: ${window.physicalW}x${window.physicalH} Active:${window.isActive}"
                 )
             }

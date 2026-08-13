@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.util.Log
 import android.webkit.JavascriptInterface
 import androidx.annotation.Keep
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.constant.HtmlAttribute
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.renderer.VLCRenderPool
@@ -24,7 +25,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun printVLC() {
-        Log.d("Prism", "printVLC")
+        Log.d(Constant.TAG, "printVLC")
         VLCRenderPool.printVLC()
     }
 
@@ -35,7 +36,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun onVisibilityChanged(id: String, v: Boolean) {
-        Log.d("Prism", "onVisibilityChanged id=$id visible=$v")
+        Log.d(Constant.TAG, "onVisibilityChanged id=$id visible=$v")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.onVisibilityChanged(id, v)
@@ -44,7 +45,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSurfaceCreated(id: String, v: Boolean) {
-        Log.d("Prism", "onSurfaceCreated id=$id visible=$v")
+        Log.d(Constant.TAG, "onSurfaceCreated id=$id visible=$v")
         if (id.isBlank()) return
         webView.post {
             val surface = VELCSurface(
@@ -58,7 +59,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSurfaceDestroyed(id: String) {
-        Log.d("Prism", "onSurfaceDestroyed id=$id")
+        Log.d(Constant.TAG, "onSurfaceDestroyed id=$id")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->
@@ -69,7 +70,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onSetAttribute(id: String, k: String, v: String) {
-        Log.d("Prism", "onSetAttribute id=$id key=$k value=$v")
+        Log.d(Constant.TAG, "onSetAttribute id=$id key=$k value=$v")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->
@@ -80,7 +81,7 @@ class VLCJSBridge(
 
     @JavascriptInterface
     fun onRectChanged(id: String, x: Float, y: Float, w: Float, h: Float) {
-        Log.d("Prism", "onRectChanged id=$id x=$x y=$y w=$w h=$h")
+        Log.d(Constant.TAG, "onRectChanged id=$id x=$x y=$y w=$w h=$h")
         if (id.isBlank()) return
         webView.post {
             WidgetManager.getWidget(id)?.let { widget ->

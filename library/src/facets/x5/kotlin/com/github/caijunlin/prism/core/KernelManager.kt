@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.callback.Callback
 import com.github.caijunlin.prism.util.LicenseManager
 import com.tencent.smtt.export.external.TbsCoreSettings
@@ -116,7 +117,7 @@ object KernelManager {
     private fun installAndAuth(context: Context, authCode: String) {
         val kernelVersion = 48445
         val version = QbSdk.getTbsVersion(context)
-        Log.d("Prism", "cv=$version iv=$kernelVersion")
+        Log.d(Constant.TAG, "cv=$version iv=$kernelVersion")
         /** 判断是否需要安装或更新内核 */
         val needInstallOrUpdateX5 = version != kernelVersion
 
@@ -124,12 +125,12 @@ object KernelManager {
             // 创建下载器实例
             val downloader = object : X5Downloader(context) {
                 override fun onFinished() {
-                    Log.d("Prism", "Inst done, prep auth")
+                    Log.d(Constant.TAG, "Inst done, prep auth")
                     doAuthAndInit(context)
                 }
 
                 override fun onFailed(code: Int, msg: String?) {
-                    Log.e("Prism", "Inst fail: $msg $code")
+                    Log.e(Constant.TAG, "Inst fail: $msg $code")
                     dispatchFailed(context, code, msg)
                 }
             }
@@ -144,9 +145,9 @@ object KernelManager {
                         input.copyTo(output)
                     }
                 }
-                Log.d("Prism", "Copy done")
+                Log.d(Constant.TAG, "Copy done")
             } else {
-                Log.d("Prism", "Cache exist, skip copy")
+                Log.d(Constant.TAG, "Cache exist, skip copy")
             }
             downloader.installX5(outFile)
         } else {
@@ -164,18 +165,18 @@ object KernelManager {
             override fun onResponse(license: String?) {
                 QbSdk.preInit(context, object : QbSdk.PreInitCallback {
                     override fun onCoreInitFinished() {
-                        Log.d("Prism", "Core init done")
+                        Log.d(Constant.TAG, "Core init done")
                     }
 
                     override fun onViewInitFinished(isX5Core: Boolean) {
-                        Log.d("Prism", "View init done, x5: $isX5Core")
+                        Log.d(Constant.TAG, "View init done, x5: $isX5Core")
                         dispatchSuccess(context, isX5Core)
                     }
                 })
             }
 
             override fun onFailed(code: Int, msg: String?) {
-                Log.e("Prism", "Auth fail: $msg $code")
+                Log.e(Constant.TAG, "Auth fail: $msg $code")
                 dispatchFailed(context, code, msg)
             }
         })

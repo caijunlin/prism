@@ -3,6 +3,7 @@ package com.github.caijunlin.prism.bridge
 import android.util.Log
 import android.webkit.JavascriptInterface
 import androidx.annotation.Keep
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.renderer.VLCRenderPool
 
@@ -20,7 +21,7 @@ class VLCJSBridge(
      */
     @JavascriptInterface
     fun printVLC() {
-        Log.d("Prism", "printVLC")
+        Log.d(Constant.TAG, "printVLC")
         VLCRenderPool.printVLC()
     }
 

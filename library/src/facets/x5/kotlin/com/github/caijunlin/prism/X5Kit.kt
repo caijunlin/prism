@@ -32,19 +32,19 @@ object X5Kit {
         try {
             val authCode = getAuthCode(context)
             if (authCode.isEmpty()) {
-                Log.e("Prism", "AuthCode empty")
+                Log.e(Constant.TAG, "AuthCode empty")
                 return
             }
             // 授权开启内核
             KernelManager.initKernel(context, authCode)
             Log.d(
-                "Prism",
+                Constant.TAG,
                 "Init Success: auth=***${
                     authCode.drop(authCode.length / 3).dropLast(authCode.length / 3)
                 }***"
             )
         } catch (e: Exception) {
-            Log.e("Prism", "Init Failed: ${e.message}")
+            Log.e(Constant.TAG, "Init Failed: ${e.message}")
         }
     }
 
@@ -56,7 +56,7 @@ object X5Kit {
             )
             return appInfo.metaData?.getString(LICENSE_KEY, "") ?: ""
         } catch (e: Exception) {
-            Log.e("Prism", "Failed to get meta-data: $LICENSE_KEY", e)
+            Log.e(Constant.TAG, "Failed to get meta-data: $LICENSE_KEY", e)
         }
         return ""
     }
@@ -70,9 +70,9 @@ object X5Kit {
     fun registerCallback(callback: Callback) {
         try {
             KernelManager.registerCallback(callback)
-            Log.d("Prism", "Callback registered.")
+            Log.d(Constant.TAG, "Callback registered.")
         } catch (e: Exception) {
-            Log.e("Prism", "Register callback error: ${e.message}")
+            Log.e(Constant.TAG, "Register callback error: ${e.message}")
         }
     }
 
@@ -86,9 +86,9 @@ object X5Kit {
     fun unregisterCallback(callback: Callback) {
         try {
             KernelManager.unregisterCallback(callback)
-            Log.d("Prism", "Callback unregistered.")
+            Log.d(Constant.TAG, "Callback unregistered.")
         } catch (e: Exception) {
-            Log.e("Prism", "Unregister callback error: ${e.message}")
+            Log.e(Constant.TAG, "Unregister callback error: ${e.message}")
         }
     }
 
@@ -104,7 +104,7 @@ object X5Kit {
     ): Boolean {
         val authCode = getAuthCode(context)
         if (authCode.isEmpty()) {
-            Log.e("Prism", "AuthCode empty")
+            Log.e(Constant.TAG, "AuthCode empty")
             return false
         }
         return LicenseManager.isAuthorized(context, authCode)
@@ -119,9 +119,9 @@ object X5Kit {
         try {
             WidgetManager.clearAll()
             VLCRenderPool.releaseWorkspace()
-            Log.d("Prism", "Soft release done.")
+            Log.d(Constant.TAG, "Soft release done.")
         } catch (e: Exception) {
-            Log.e("Prism", "Soft release error: ${e.message}")
+            Log.e(Constant.TAG, "Soft release error: ${e.message}")
         }
     }
 
@@ -136,9 +136,9 @@ object X5Kit {
             WidgetManager.clearAll()
             VLCRenderPool.release()
             KernelManager.release(context)
-            Log.d("Prism", "All resources released.")
+            Log.d(Constant.TAG, "All resources released.")
         } catch (e: Exception) {
-            Log.e("Prism", "ReleaseAll error: ${e.message}")
+            Log.e(Constant.TAG, "ReleaseAll error: ${e.message}")
         }
     }
 

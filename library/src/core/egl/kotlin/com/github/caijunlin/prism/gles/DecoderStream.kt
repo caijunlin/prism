@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.Surface
 import androidx.core.graphics.createBitmap
 import androidx.core.net.toUri
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.core.VLCEngineManager
 import org.videolan.libvlc.LibVLC
 import org.videolan.libvlc.Media
@@ -86,7 +87,7 @@ class DecoderStream(
                 if (!hasFirstFrame) {
                     if (System.currentTimeMillis() - startPlayTimeMs > 15000L) {
                         Log.e(
-                            "Prism",
+                            Constant.TAG,
                             "Watchdog Bite! 15s timeout waiting for FIRST frame: $url"
                         )
                         retryPlay()
@@ -94,7 +95,7 @@ class DecoderStream(
                     }
                 } else {
                     if (System.currentTimeMillis() - lastWatchdogMark > 5000L) {
-                        Log.e("Prism", "Watchdog Bite! Video completely frozen for 5s: $url")
+                        Log.e(Constant.TAG, "Watchdog Bite! Video completely frozen for 5s: $url")
                         retryPlay()
                         return
                     }
@@ -138,7 +139,7 @@ class DecoderStream(
             onFrameUpdateListener?.invoke()
 
         } catch (e: Exception) {
-            Log.e("Prism", "OES Fast Consume failed: ${e.message}")
+            Log.e(Constant.TAG, "OES Fast Consume failed: ${e.message}")
         }
     }
 
@@ -348,7 +349,7 @@ class DecoderStream(
             mediaPlayer?.vlcVout?.detachViews()
             mediaPlayer?.release()
         } catch (e: Exception) {
-            Log.e("Prism", "Release VLC failed: ${e.message}")
+            Log.e(Constant.TAG, "Release VLC failed: ${e.message}")
         } finally {
             mediaPlayer = null
         }
@@ -371,6 +372,6 @@ class DecoderStream(
         miniBitmap = null
         onFrameUpdateListener = null
 
-        Log.d("Prism", "Release stream: $url")
+        Log.d(Constant.TAG, "Release stream: $url")
     }
 }

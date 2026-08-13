@@ -1,6 +1,7 @@
 package com.github.caijunlin.prism.widget
 
 import android.util.Log
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.renderer.IVideoRenderClient
 import org.json.JSONObject
@@ -25,7 +26,7 @@ object WidgetManager {
         // 确保 ID 唯一性
         widgetCache.removeAll { it.isSameId(id) }
         widgetCache.add(widget)
-        Log.d("Prism", "Cached widget with id: $id")
+        Log.d(Constant.TAG, "Cached widget with id: $id")
     }
 
     /**
@@ -45,7 +46,7 @@ object WidgetManager {
         val removed = widgetCache.removeAll { it.isSameId(id) }
         if (removed) {
             Log.d(
-                "Prism", "Removed widget with id: $id"
+                Constant.TAG, "Removed widget with id: $id"
             )
         }
     }
@@ -55,7 +56,7 @@ object WidgetManager {
      */
     fun clearAll() {
         widgetCache.clear()
-        Log.d("Prism", "Cleared all widget caches.")
+        Log.d(Constant.TAG, "Cleared all widget caches.")
     }
 
     /**

@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.DragEvent
 import android.view.MotionEvent
 import androidx.annotation.Keep
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.bridge.VLCJSBridge
 import com.github.caijunlin.prism.callback.WebViewClient
 import com.github.caijunlin.prism.gesture.VLCDragManager
@@ -259,7 +260,7 @@ class WebView(
         val tags = arrayOf(widgetTag)
         val success = x5WebViewExtension?.registerEmbeddedWidget(tags, this) ?: false
         Log.d(
-            "Prism",
+            Constant.TAG,
             "TBS:${QbSdk.getTbsVersion(context)} X5:${isX5Core} Init:${QbSdk.isTbsCoreInited()} FrcSys:${QbSdk.getIsSysWebViewForcedByOuter()} Reg:$success Tag:$widgetTag"
         )
     }

@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.MotionEvent
 import android.view.Surface
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.constant.HtmlAttribute
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.gesture.VideoGestureHelper
@@ -91,11 +92,11 @@ class VLCVideoSurface(
         // 只要 URL 存在，哪怕 Surface 没好，宽高为 0，也立即后台开始解流！
         if (decodingUrl != targetUrl) {
             decodingUrl?.let { oldUrl ->
-                Log.d("Prism", "Stop Decode Stream: $oldUrl")
+                Log.d(Constant.TAG, "Stop Decode Stream: $oldUrl")
                 VLCRenderPool.stopDecodeTask(oldUrl, this)
             }
             targetUrl?.let { newUrl ->
-                Log.d("Prism", "Start Decode Stream: $newUrl")
+                Log.d(Constant.TAG, "Start Decode Stream: $newUrl")
                 VLCRenderPool.startDecodeTask(newUrl, this)
             }
             decodingUrl = targetUrl
@@ -113,14 +114,14 @@ class VLCVideoSurface(
                 attachedUrl?.let { oldAttachedUrl ->
                     VLCRenderPool.detachSurface(oldAttachedUrl, this, isClearUrl = false)
                 }
-                Log.d("Prism", "Attach Surface to Stream: $targetUrl")
+                Log.d(Constant.TAG, "Attach Surface to Stream: $targetUrl")
                 VLCRenderPool.attachSurface(targetUrl, this)
                 attachedUrl = targetUrl
             }
         } else {
             // 如果计算出的目标结果是“不该挂载”（如隐藏、尺寸变0、Surface销毁等）
             if (attachedUrl != null) {
-                Log.d("Prism", "Detach Surface from Stream: $attachedUrl")
+                Log.d(Constant.TAG, "Detach Surface from Stream: $attachedUrl")
                 // 若是因为 URL 被强行清空导致的卸载，传 true 触发彻底清屏洗黑残影
                 val isClear = targetUrl == null
                 VLCRenderPool.detachSurface(attachedUrl!!, this, isClearUrl = isClear)

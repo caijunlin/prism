@@ -16,6 +16,7 @@ import android.view.TextureView
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.github.caijunlin.prism.Constant
 import com.github.caijunlin.prism.constant.HtmlAttribute
 import com.github.caijunlin.prism.core.WebView
 import com.github.caijunlin.prism.renderer.IVideoRenderClient
@@ -210,11 +211,11 @@ class VELCSurface(
 
         if (decodingUrl != effectiveUrl) {
             decodingUrl?.let { oldUrl ->
-                Log.d("Prism", "Stop Decode Stream: $oldUrl $id")
+                Log.d(Constant.TAG, "Stop Decode Stream: $oldUrl $id")
                 VLCRenderPool.stopDecodeTask(oldUrl, this)
             }
             effectiveUrl?.let { newUrl ->
-                Log.d("Prism", "Start Decode Stream: $newUrl $id")
+                Log.d(Constant.TAG, "Start Decode Stream: $newUrl $id")
                 VLCRenderPool.startDecodeTask(newUrl, this)
             }
             decodingUrl = effectiveUrl
@@ -228,13 +229,13 @@ class VELCSurface(
                 attachedUrl?.let { oldAttachedUrl ->
                     VLCRenderPool.detachSurface(oldAttachedUrl, this, isClearUrl = false)
                 }
-                Log.d("Prism", "Attach Surface to Stream: $effectiveUrl  $id")
+                Log.d(Constant.TAG, "Attach Surface to Stream: $effectiveUrl  $id")
                 VLCRenderPool.attachSurface(effectiveUrl, this)
                 attachedUrl = effectiveUrl
             }
         } else {
             if (attachedUrl != null) {
-                Log.d("Prism", "Detach Surface from Stream: $attachedUrl  $id")
+                Log.d(Constant.TAG, "Detach Surface from Stream: $attachedUrl  $id")
                 val isClear = effectiveUrl == null
                 VLCRenderPool.detachSurface(attachedUrl!!, this, isClearUrl = isClear)
                 attachedUrl = null

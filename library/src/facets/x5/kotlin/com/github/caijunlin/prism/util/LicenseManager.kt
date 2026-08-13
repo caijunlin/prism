@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
+import com.github.caijunlin.prism.Constant
 import java.io.File
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -33,7 +34,7 @@ object LicenseManager {
         if (oldAuthCodeHash.isNotEmpty() && authCodeHash != oldAuthCodeHash) {
             // 激活码发生了改变，物理删除 X5 的核心文件夹 (app_tbs)
             val dir = File(context.applicationInfo.dataDir, "app_tbs")
-            Log.d("Prism", "License changed delete X5 core folder: $dir")
+            Log.d(Constant.TAG, "License changed delete X5 core folder: $dir")
             dir.deleteRecursively()
         }
         sp.edit { putString(AUTH, authCodeHash) }
