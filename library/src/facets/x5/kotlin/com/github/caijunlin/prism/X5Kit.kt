@@ -18,6 +18,8 @@ import com.github.caijunlin.prism.widget.WidgetManager
 @Keep
 object X5Kit {
 
+    const val LICENSE_KEY: String = "com.github.caijunlin.x5.license"
+
     /**
      * 初始化引擎
      * @param context 上下文
@@ -52,13 +54,9 @@ object X5Kit {
                 context.packageName,
                 PackageManager.GET_META_DATA
             )
-            return appInfo.metaData?.getString("com.github.caijunlin.x5.license", "") ?: ""
+            return appInfo.metaData?.getString(LICENSE_KEY, "") ?: ""
         } catch (e: Exception) {
-            Log.e(
-                "VLCDecoder",
-                "Failed to get meta-data: com.github.caijunlin.x5.license",
-                e
-            )
+            Log.e("VLCDecoder", "Failed to get meta-data: $LICENSE_KEY", e)
         }
         return ""
     }
