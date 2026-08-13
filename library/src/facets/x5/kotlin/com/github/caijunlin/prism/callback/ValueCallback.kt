@@ -1,5 +1,6 @@
 package com.github.caijunlin.prism.callback
 
+import androidx.annotation.Keep
 import com.tencent.smtt.sdk.ValueCallback as OValueCallback
 
 /**
@@ -7,4 +8,5 @@ import com.tencent.smtt.sdk.ValueCallback as OValueCallback
  * @date   : 2026/8/13
  * @description   : 空实现
  */
+@Keep
 interface ValueCallback<T> : OValueCallback<T>
