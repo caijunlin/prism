@@ -1,4 +1,4 @@
-val versionName = "1.0.0"
+val versionName = "1.1.0"
 
 val jdkVersion = 21
 val flavors = listOf("x5", "native", "normal")
