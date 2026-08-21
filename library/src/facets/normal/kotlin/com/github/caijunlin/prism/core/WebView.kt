@@ -209,9 +209,6 @@ class WebView(
         if (event.action == MotionEvent.ACTION_UP) {
             performClick()
         }
-        if (!isScroll && event.actionMasked == MotionEvent.ACTION_MOVE) {
-            return true
-        }
         return super.onTouchEvent(event)
     }
 

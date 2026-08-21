@@ -333,10 +333,6 @@ class WebView(
         if (event.action == MotionEvent.ACTION_UP) {
             performClick()
         }
-        // 如果禁止滚动且是滑动操作，则不处�?
-        if (!isScroll && event.action == MotionEvent.ACTION_MOVE) {
-            return false
-        }
         return super.onTouchEvent(event)
     }
 
